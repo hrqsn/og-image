@@ -21,7 +21,7 @@ function getCss(theme: string, fontSize: string) {
         foreground = 'white';
     }
     return `
-    @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700&display=swap')
+    @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP')
 
     @font-face {
         font-family: 'Inter';
@@ -45,10 +45,10 @@ function getCss(theme: string, fontSize: string) {
     }
 
     .wrapper {
-        width: calc(100vw - 80px);
-        height: calc(100vh - 80px);
+        width: calc(100vw - 160px);
+        height: calc(100vh - 160px);
         background: #fff;
-        border-radius: 24px;
+        border-radius: 48px;
         display: flex;
         justify-content: center;
         align-items: center;
@@ -59,15 +59,20 @@ function getCss(theme: string, fontSize: string) {
         position: absolute;
         bottom: 0;
         right: 0;
-        padding: 0 40px 32px 0;
+        padding: 0 80px 64px 0;
         display: flex; 
         align-items: center;
     }
 
     .author {
-        padding-right: 40px;
-        font-size: 32px;
+        padding-right: 80px;
+        font-size: 64px;
         margin-top: 8px;
+    }
+
+    .logo {
+        height: 80px;
+        width: auto;
     }
 
     body {
@@ -115,7 +120,7 @@ function getCss(theme: string, fontSize: string) {
         font-weight: bold;
         color: ${foreground};
         line-height: 1.6;
-        padding: 40px;
+        padding: 80px;
     }`;
 }
 
@@ -137,7 +142,7 @@ export function getHtml(parsedReq: ParsedRequest) {
             </div>
             <div class="meta">
                 <span class="author">${author}</span>
-                <img src="${sanitizeHtml(logo)}" alt="osiete" />
+                <img src="${sanitizeHtml(logo)}" alt="osiete" class="logo" />
             </div>
         </div>
     </body>
