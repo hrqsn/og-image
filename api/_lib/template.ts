@@ -10,18 +10,19 @@ const emojify = (text: string) => twemoji.parse(text, twOptions);
 const rglr = readFileSync(`${__dirname}/../_fonts/Inter-Regular.woff2`).toString('base64');
 const bold = readFileSync(`${__dirname}/../_fonts/Inter-Bold.woff2`).toString('base64');
 const mono = readFileSync(`${__dirname}/../_fonts/Vera-Mono.woff2`).toString('base64');
+const logo = 'https://user-images.githubusercontent.com/25542189/103164508-85d6df80-484f-11eb-8450-2d3aecdf9ea9.png'
 
 function getCss(theme: string, fontSize: string) {
     let background = 'white';
     let foreground = 'black';
-    let radial = 'lightgray';
 
     if (theme === 'dark') {
         background = 'black';
         foreground = 'white';
-        radial = 'dimgray';
     }
     return `
+    @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700&display=swap')
+
     @font-face {
         font-family: 'Inter';
         font-style:  normal;
@@ -41,17 +42,42 @@ function getCss(theme: string, fontSize: string) {
         font-style: normal;
         font-weight: normal;
         src: url(data:font/woff2;charset=utf-8;base64,${mono})  format("woff2");
-      }
+    }
+
+    .wrapper {
+        width: calc(100vw - 80px);
+        height: calc(100vh - 80px);
+        background: #fff;
+        border-radius: 24px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        position: relative;
+    }
+
+    .meta {
+        position: absolute;
+        bottom: 0;
+        right: 0;
+        padding: 0 40px 32px 0;
+        display: flex; 
+        align-items: center;
+    }
+
+    .author {
+        padding-right: 40px;
+        font-size: 32px;
+        margin-top: 8px;
+    }
 
     body {
         background: ${background};
-        background-image: radial-gradient(circle at 25px 25px, ${radial} 2%, transparent 0%), radial-gradient(circle at 75px 75px, ${radial} 2%, transparent 0%);
-        background-size: 100px 100px;
         height: 100vh;
         display: flex;
         text-align: center;
         align-items: center;
         justify-content: center;
+        background-color: #6366F1;
     }
 
     code {
@@ -63,18 +89,6 @@ function getCss(theme: string, fontSize: string) {
 
     code:before, code:after {
         content: '\`';
-    }
-
-    .logo-wrapper {
-        display: flex;
-        align-items: center;
-        align-content: center;
-        justify-content: center;
-        justify-items: center;
-    }
-
-    .logo {
-        margin: 0 75px;
     }
 
     .plus {
@@ -95,16 +109,18 @@ function getCss(theme: string, fontSize: string) {
     }
     
     .heading {
-        font-family: 'Inter', sans-serif;
+        font-family: 'Noto Sans JP', 'Inter', sans-serif;
         font-size: ${sanitizeHtml(fontSize)};
         font-style: normal;
+        font-weight: bold;
         color: ${foreground};
-        line-height: 1.8;
+        line-height: 1.6;
+        padding: 40px;
     }`;
 }
 
 export function getHtml(parsedReq: ParsedRequest) {
-    const { text, theme, md, fontSize, images, widths, heights } = parsedReq;
+    const { text, theme, md, fontSize, author } = parsedReq;
     return `<!DOCTYPE html>
 <html>
     <meta charset="utf-8">
@@ -114,33 +130,16 @@ export function getHtml(parsedReq: ParsedRequest) {
         ${getCss(theme, fontSize)}
     </style>
     <body>
-        <div>
-            <div class="spacer">
-            <div class="logo-wrapper">
-                ${images.map((img, i) =>
-                    getPlusSign(i) + getImage(img, widths[i], heights[i])
-                ).join('')}
-            </div>
-            <div class="spacer">
+        <div class="wrapper">
             <div class="heading">${emojify(
                 md ? marked(text) : sanitizeHtml(text)
             )}
             </div>
+            <div class="meta">
+                <span class="author">${author}</span>
+                <img src="${sanitizeHtml(logo)}" alt="osiete" />
+            </div>
         </div>
     </body>
 </html>`;
-}
-
-function getImage(src: string, width ='auto', height = '225') {
-    return `<img
-        class="logo"
-        alt="Generated Image"
-        src="${sanitizeHtml(src)}"
-        width="${sanitizeHtml(width)}"
-        height="${sanitizeHtml(height)}"
-    />`
-}
-
-function getPlusSign(i: number) {
-    return i === 0 ? '' : '<div class="plus">+</div>';
 }
