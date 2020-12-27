@@ -10,7 +10,9 @@ const emojify = (text: string) => twemoji.parse(text, twOptions);
 const rglr = readFileSync(`${__dirname}/../_fonts/Inter-Regular.woff2`).toString('base64');
 const bold = readFileSync(`${__dirname}/../_fonts/Inter-Bold.woff2`).toString('base64');
 const mono = readFileSync(`${__dirname}/../_fonts/Vera-Mono.woff2`).toString('base64');
-const logo = 'https://user-images.githubusercontent.com/25542189/103164508-85d6df80-484f-11eb-8450-2d3aecdf9ea9.png'
+const rglrJP = readFileSync(`${__dirname}/../_fonts/NotoSansJP-Regular.otf`).toString('base64');
+const boldJP = readFileSync(`${__dirname}/../_fonts/NotoSansJP-Bold.otf`).toString('base64');
+const logo = 'https://user-images.githubusercontent.com/25542189/103164942-cbe27200-4854-11eb-8cd7-07d6833e7b28.png';
 
 function getCss(theme: string, fontSize: string) {
     let background = 'white';
@@ -21,7 +23,19 @@ function getCss(theme: string, fontSize: string) {
         foreground = 'white';
     }
     return `
-    @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP')
+    @font-face {
+        font-family: 'Noto Sans JP';
+        font-style:  normal;
+        font-weight: normal;
+        src: url(data:font/otf;charset=utf-8;base64,${rglrJP}) format('opentype');
+    }
+
+    @font-face {
+        font-family: 'Noto Sans JP';
+        font-style:  normal;
+        font-weight: bold;
+        src: url(data:font/otf;charset=utf-8;base64,${boldJP}) format('opentype');
+    }
 
     @font-face {
         font-family: 'Inter';
@@ -59,19 +73,19 @@ function getCss(theme: string, fontSize: string) {
         position: absolute;
         bottom: 0;
         right: 0;
-        padding: 0 80px 64px 0;
+        padding: 0 72px 60px 0;
         display: flex; 
         align-items: center;
     }
 
     .author {
-        padding-right: 80px;
-        font-size: 64px;
-        margin-top: 8px;
+        padding-right: 60px;
+        font-size: 60px;
+        margin-top: 24px;
     }
 
     .logo {
-        height: 80px;
+        height: 72px;
         width: auto;
     }
 
