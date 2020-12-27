@@ -79,9 +79,12 @@ function getCss(theme: string, fontSize: string) {
     }
 
     .author {
+        font-family: 'Noto Sans JP', 'Inter', sans-serif;
         padding-right: 60px;
         font-size: 60px;
         margin-top: 24px;
+        font-style: normal;
+        font-weight: normal;
     }
 
     .logo {
