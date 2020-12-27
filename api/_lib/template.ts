@@ -59,8 +59,8 @@ function getCss(theme: string, fontSize: string) {
     }
 
     .wrapper {
-        width: calc(100vw - 160px);
-        height: calc(100vh - 160px);
+        width: calc(100% - 160px);
+        height: calc(100% - 160px);
         background: #fff;
         border-radius: 48px;
         display: flex;
@@ -100,23 +100,6 @@ function getCss(theme: string, fontSize: string) {
         align-items: center;
         justify-content: center;
         background-color: #6366F1;
-    }
-
-    code {
-        color: #D400FF;
-        font-family: 'Vera';
-        white-space: pre-wrap;
-        letter-spacing: -5px;
-    }
-
-    code:before, code:after {
-        content: '\`';
-    }
-
-    .plus {
-        color: #BBB;
-        font-family: Times New Roman, Verdana;
-        font-size: 100px;
     }
 
     .spacer {
